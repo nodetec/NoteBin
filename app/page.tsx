@@ -24,7 +24,13 @@ function HomePage() {
   useEffect(() => {}, []);
 
   const handleSubmit = async () => {
-    const relay = relayInit("wss://relay.example.com");
+    //   "wss://relay.damus.io",
+    //   "wss://nostr-pub.wellorder.net",
+    //   "wss://nos.lol/",
+    //   "wss://relay.snort.social",
+    //   "wss://nostr.wine/",
+
+    const relay = relayInit("wss://nostr-pub.wellorder.net");
     relay.on("connect", () => {
       console.log(`connected to ${relay.url}`);
     });
@@ -44,12 +50,23 @@ function HomePage() {
       pubkey: getPublicKey(privateKey),
     };
 
+    console.log(event);
+
     event.id = getEventHash(event);
     event.sig = getSignature(event, privateKey);
 
-    let ok = validateEvent(event);
-    let veryOk = verifySignature(event);
     console.log(event);
+
+    let pub = relay.publish(event);
+    pub.on("ok", () => {
+      console.log(`${relay.url} has accepted our event`);
+    });
+    pub.on("failed", (reason) => {
+      console.log(`failed to publish to ${relay.url}: ${reason}`);
+    });
+
+    // relay.close();
+
   };
 
   return (
