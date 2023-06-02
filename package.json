@@ -9,36 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "13.1.1",
-    "@types/node": "18.11.18",
-    "@types/react": "18.0.26",
-    "@types/react-dom": "18.0.10",
-    "@uiw/react-textarea-code-editor": "^2.0.6",
-    "bech32": "^2.0.0",
-    "crypto-js": "^4.1.1",
-    "eslint": "8.31.0",
-    "eslint-config-next": "13.1.1",
-    "lnurl-pay": "^2.1.1",
-    "markdown-it": "^13.0.1",
-    "next": "13.1.1",
-    "next-remove-imports": "^1.0.8",
-    "next-themes": "^0.2.1",
-    "nostr-react": "^0.6.1",
-    "nostr-tools": "^1.1.1",
+    "@headlessui/react": "^1.7.15",
+    "@types/node": "20.2.5",
+    "@types/react": "18.2.8",
+    "@types/react-dom": "18.2.4",
+    "@uiw/react-textarea-code-editor": "^2.1.1",
+    "autoprefixer": "10.4.14",
+    "eslint": "8.41.0",
+    "eslint-config-next": "13.4.4",
+    "next": "13.4.4",
+    "next-remove-imports": "^1.0.11",
+    "nostr-tools": "^1.11.1",
+    "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.7.1",
-    "typescript": "4.9.4",
-    "webln": "^0.3.2"
+    "tailwindcss": "3.3.2",
+    "typescript": "5.1.3"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/typography": "^0.5.9",
-    "@types/crypto-js": "^4.1.1",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.21",
-    "react-responsive": "^9.0.2",
-    "tailwindcss": "^3.2.4",
-    "websocket-polyfill": "^0.0.3"
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.3.0"
   }
 }
