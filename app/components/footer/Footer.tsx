@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="my-5 border-t bg-slate-50 py-5 dark:border-smoke-700 dark:bg-smoke-800">
       <div className="mx-auto max-w-7xl px-6 md:flex md:items-center md:justify-between lg:px-8">
-        <div className="flex gap-1 items-center">
+        <div className="flex items-center gap-1">
           <svg className="mr-2 h-6 w-6 fill-slate-700 dark:fill-smoke-400" version="1.1" id="svg99" viewBox="0 0 1850.508 980.47635">
             <defs id="defs103"></defs>
             <g id="g105" transform="translate(-46.516152,-184.16177)">
@@ -88,7 +88,6 @@ export default function Footer() {
           </a>
         </div>
         <div className="mt-8 md:order-1 md:mt-0">
-          {/* <ThemeMenu client:load /> */}
           <p className="text-center text-xs leading-5 text-smoke-500"></p>
         </div>
       </div>
