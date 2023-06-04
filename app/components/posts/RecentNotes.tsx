@@ -8,7 +8,7 @@ const projects = [
 export default function RecentNotes() {
   return (
     <div className="mb-10">
-      <ul role="list" className="mt-3 hidden grid-cols-1 lg:grid lg:grid-cols-4 lg:gap-3">
+      <ul role="list" className="mt-3 hidden grid-cols-1 md:grid md:grid-cols-4 md:gap-3">
         {projects.map((project) => (
           <li key={project.name} className="col-span-1 flex rounded-md border shadow-md dark:border-smoke-600">
             <a href={project.href} className="font-medium text-gray-900 hover:text-gray-600 dark:text-blue-500">

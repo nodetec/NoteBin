@@ -1,8 +1,10 @@
-import { UserCircleIcon } from "@heroicons/react/24/outline";
-
+import Login from "./Login";
 import ThemeToggle from "./ThemeToggle";
+import { Theme } from "../../types";
+import { cookies } from "next/headers"
 
 export default function Header() {
+  const theme = cookies().get("theme")?.value === "dark" ? Theme.dark : Theme.light
   return (
     <header className="mb-7 flex items-center justify-between px-4 py-4 dark:border-smoke-600">
       <div className="flex items-center justify-center gap-4">
@@ -17,12 +19,19 @@ export default function Header() {
           </h1>
         </div>
         <div>
-          <span className="font-mono text-sm dark:text-smoke-300">Explore</span>
+          <span className="text-sm dark:text-smoke-300">Explore</span>
         </div>
       </div>
       <div className="flex items-center justify-center gap-4">
-        <ThemeToggle />
-        <UserCircleIcon className="h-7 w-7 text-smoke-400" aria-hidden="true" />
+        <ThemeToggle theme={theme} />
+        <Login>
+          <div className="flex flex-1 justify-end">
+            <a href="#" className="text-sm font-semibold leading-6 text-white">
+              Log in <span aria-hidden="true">&rarr;</span>
+            </a>
+            {/* <UserCircleIcon className="h-7 w-7 text-smoke-400" aria-hidden="true" /> */}
+          </div>
+        </Login>
       </div>
     </header>
   );

@@ -52,7 +52,7 @@ function classNames(...classes: any) {
 }
 
 export default function RelayMenu({ children }: any) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <>

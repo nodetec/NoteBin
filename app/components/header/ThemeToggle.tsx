@@ -1,42 +1,34 @@
 "use client";
-import { useEffect, useState } from "react";
-import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 
-export default function ThemeToggle() {
-  const [theme, setTheme] = useState("");
+import { useState } from "react";
+
+import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
+
+import { Theme } from "../../types";
+
+interface Props {
+  theme: Theme;
+}
+
+export default function ThemeToggle({ theme }: Props) {
+  const [_theme, setTheme] = useState<Theme>(theme);
 
   const toggleTheme = () => {
-    if (theme === "dark") {
-      setTheme("light");
-      localStorage.theme = "light";
-    }
-    if (theme === "light") {
-      setTheme("dark");
-      localStorage.theme = "dark";
+    const root = document.getElementsByTagName("html")[0];
+    root.classList.toggle(Theme.dark);
+    if (root.classList.contains(Theme.dark)) {
+      setTheme(Theme.dark);
+      document.cookie = `theme=${Theme.dark}`;
+    } else {
+      setTheme(Theme.light);
+      document.cookie = `theme=${Theme.light}`;
     }
   };
 
-  useEffect(() => {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-      setTheme("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      setTheme("light");
-    }
-  }, [theme]);
-
   return (
     <>
-      <button
-        className="hidden outline-none focus:ring-0 lg:block"
-        onClick={toggleTheme}
-      >
-        {theme === "light" ? (
+      <button className="hidden outline-none focus:ring-0 sm:block" onClick={toggleTheme}>
+        {_theme === Theme.light ? (
           <SunIcon className="h-5 w-5 text-orange-500" aria-hidden="true" />
         ) : (
           <MoonIcon className="h-5 w-5 text-purple-500" aria-hidden="true" />
