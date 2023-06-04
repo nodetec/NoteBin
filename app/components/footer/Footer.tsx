@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="my-6 border-t bg-slate-50 py-6 dark:border-smoke-700 dark:bg-smoke-800">
+    <footer className="my-5 border-t bg-slate-50 py-5 dark:border-smoke-700 dark:bg-smoke-800">
       <div className="mx-auto max-w-7xl px-6 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex gap-1 items-center">
           <svg className="mr-2 h-6 w-6 fill-slate-700 dark:fill-smoke-400" version="1.1" id="svg99" viewBox="0 0 1850.508 980.47635">
