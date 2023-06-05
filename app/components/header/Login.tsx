@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 
 import { useLightningStore } from "@/app/stores/lightningStore";
 import { useUserProfileStore } from "@/app/stores/userProfileStore";
-import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
-
 import UserProfile from "../profile/UserProfile";
 
 export default function Login({ children }: any) {
