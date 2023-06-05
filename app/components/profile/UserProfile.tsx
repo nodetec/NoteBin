@@ -5,6 +5,8 @@ import { useRelayStore } from "@/app/stores/relayStore";
 import { useUserProfileStore } from "@/app/stores/userProfileStore";
 import type { Event } from "nostr-tools";
 
+import { shortenHash } from "../../lib/utils";
+
 import { EventProfileContent, Profile } from "../../types";
 import UserMenu from "../menus/UserMenu";
 
@@ -14,29 +16,22 @@ export default function UserProfile() {
   const [currentProfile, setCurrentProfile] = useState<Profile>();
 
   useEffect(() => {
-    console.log("activeRelay", activeRelay);
     if (activeRelay === undefined) {
       connect(RELAYS[0]);
-      console.log("connected to relay");
     }
   }, []);
 
   const getEvents = async () => {
     if (currentProfile && currentProfile.relay === relayUrl) {
-      console.log("profile exists in state");
       return;
     }
 
     const cachedProfile = getUserProfile(relayUrl);
-    console.log("cached profile", cachedProfile);
 
     if (cachedProfile) {
-      console.log("profile exists in cache");
       setCurrentProfile(cachedProfile);
       return;
     }
-
-    console.log("DO I GET HERE?")
 
     // maybe get followers here too?
     // let kinds = [0, 3];
@@ -55,7 +50,7 @@ export default function UserProfile() {
       const profile: Profile = {
         relay: relayUrl || "",
         publicKey: getUserPublicKey() || "",
-        name: eventContent.name || "", // TODO: change this to shortened pubkey if name is not set
+        name: eventContent.name || shortenHash(getUserPublicKey()) || "",
         about: eventContent.about || "",
         picture: eventContent.picture || "",
         nip05: eventContent.nip05 || "",
@@ -67,9 +62,7 @@ export default function UserProfile() {
       setCurrentProfile(profile);
     };
 
-    const onEOSE = () => {
-      console.log("Finished getting profile info");
-    };
+    const onEOSE = () => {};
 
     subscribe([relayUrl], filter, onEvent, onEOSE);
   };

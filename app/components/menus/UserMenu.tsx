@@ -1,5 +1,8 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 
+import { useRelayStore } from "@/app/stores/relayStore";
+import { useUserProfileStore } from "@/app/stores/userProfileStore";
+import { Profile } from "@/app/types";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
@@ -7,14 +10,34 @@ const links = [
   { name: "Your Notes", href: "#" },
   { name: "Bookmarked Notes", href: "#" },
   { name: "Set Relays", href: "#" },
-  // create faq page later
+  // create faq page later https://github.com/vercel/next.js/discussions/17443
   // { name: "Help", href: "#" },
 ];
 
 export default function Example({ children }: any) {
+  const { activeRelay, relayUrl } = useRelayStore();
+  const { getUserProfile, clearUserProfile, setUserPublicKey } = useUserProfileStore();
+  const [currentProfile, setCurrentProfile] = useState<Profile>();
+  useEffect(() => {
+    if (currentProfile && currentProfile.relay === relayUrl) {
+      return;
+    }
+    const cachedProfile = getUserProfile(relayUrl);
+
+    if (cachedProfile) {
+      setCurrentProfile(cachedProfile);
+      return;
+    }
+  }, [relayUrl, activeRelay]);
+
+  const signOut = async () => {
+    clearUserProfile();
+    setUserPublicKey("");
+  };
+
   return (
     <Popover className="relative">
-      <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 ring-0 outline-none">
+      <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none ring-0">
         {children}
         {/* <span>Solutions</span> */}
         <ChevronDownIcon className="h-5 w-5 text-smoke-200" aria-hidden="true" />
@@ -31,19 +54,19 @@ export default function Example({ children }: any) {
       >
         <Popover.Panel className="absolute right-0 z-10 mt-2 flex w-screen max-w-min translate-x-4 px-4">
           <div className="w-48 shrink rounded-md border bg-white py-2 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5 dark:border-smoke-500 dark:bg-smoke-700 dark:text-smoke-50">
-            <a href={"#"} className="block px-4 pt-1 pb-2 mb-2 border-b border-smoke-500">
+            <a href={"#"} className="mb-2 block border-b border-smoke-500 px-4 pb-2 pt-1">
               <p className="font-normal">{"Signed in as"}</p>
-              <p>{"Christian Chiarulli"}</p>
+              {currentProfile && currentProfile.name && <p>{currentProfile.name}</p>}
             </a>
             {links.map((item) => (
               <a key={item.name} href={item.href} className="block px-4 py-1 hover:bg-blue-600">
                 {item.name}
               </a>
             ))}
-            <div className="border-t border-smoke-500 mt-2" />
-            <a href={"#"} className="block px-4 py-1 mt-2 hover:bg-blue-600">
+            <div className="mt-2 border-t border-smoke-500" />
+            <span onClick={signOut} className="cursor-pointer mt-2 block px-4 py-1 hover:bg-blue-600">
               <p>{"Sign out"}</p>
-            </a>
+            </span>
           </div>
         </Popover.Panel>
       </Transition>
