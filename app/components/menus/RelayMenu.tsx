@@ -5,9 +5,8 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const tabs = [
-  { name: "Account", href: "#", current: true },
+  { name: "Read From", href: "#", current: true },
   { name: "Post To", href: "#", current: false },
-  { name: "Read From", href: "#", current: false },
 ];
 const team = [
   {

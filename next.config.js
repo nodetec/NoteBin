@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {};
 
 // next.config.js
-const removeImports = require('next-remove-imports')()
+const removeImports = require("next-remove-imports")();
 module.exports = removeImports({
   reactStrictMode: false,
-  experimental: { esmExternals: 'loose' },
-})
+  experimental: { esmExternals: "loose" },
+});

@@ -18,10 +18,10 @@ export default function ThemeToggle({ theme }: Props) {
     root.classList.toggle(Theme.dark);
     if (root.classList.contains(Theme.dark)) {
       setTheme(Theme.dark);
-      document.cookie = `theme=${Theme.dark}`;
+      document.cookie = `theme=${Theme.dark};SameSite=Lax`;
     } else {
       setTheme(Theme.light);
-      document.cookie = `theme=${Theme.light}`;
+      document.cookie = `theme=${Theme.light};SameSite=Lax`;
     }
   };
 

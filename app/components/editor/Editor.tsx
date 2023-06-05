@@ -6,7 +6,6 @@ import { useTextStore } from "../../stores/textStore";
 import "../../styles/editor.css";
 import { AddFileButton } from "./AddFileButton";
 import { SubmitButton } from "./SubmitButton";
-import RelayMenu from "../menus/RelayMenu";
 
 const CodeEditor = dynamic(() => import("@uiw/react-textarea-code-editor").then((mod) => mod.default), { ssr: true });
 
@@ -26,7 +25,7 @@ function Editor() {
   return (
     <div>
       <input
-        className="mb-4 w-full rounded-md border border-slate-300 px-3 py-[0.35rem] text-sm outline-0 placeholder:text-sm placeholder:text-slate-400 focus:ring-0 dark:border-smoke-500 dark:bg-smoke-900 dark:placeholder:text-smoke-400"
+        className="mb-4 w-full rounded-md border border-slate-300 px-3 py-[0.35rem] text-sm outline-0 placeholder:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500  dark:border-smoke-500 dark:bg-smoke-900 dark:text-smoke-50 dark:placeholder:text-smoke-400"
         type="text"
         list="filetypes"
         placeholder="Note description..."
@@ -37,26 +36,13 @@ function Editor() {
       <div className="rounded-md border border-slate-300 dark:border-smoke-500">
         <div className="flex items-center justify-between gap-2 border-b border-slate-300 bg-slate-100 p-2 dark:border-smoke-500 dark:bg-smoke-700">
           <input
-            className="w-60 rounded-md border border-slate-300 px-3 py-[0.40rem] text-sm outline-0 placeholder:text-sm placeholder:text-slate-400 focus:ring-0 dark:border-smoke-500 dark:bg-smoke-800 dark:text-slate-100 dark:placeholder:text-smoke-400"
+            className="w-60 rounded-md border border-slate-300 px-3 py-[0.40rem] text-sm outline-0 placeholder:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:ring-offset-blue-500 dark:border-smoke-500 dark:bg-smoke-800 dark:text-slate-100 dark:placeholder:text-smoke-400"
             type="text"
             list="filetypes"
             placeholder="Filename including extension..."
             // value={filetype}
             // onChange={(e) => setFiletype(e.target.value)}
           />
-          <RelayMenu>
-            <div className="flex -space-x-2 overflow-hidden px-3 py-[0.40rem]">
-              <img className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300" src="https://damus.io/favicon.ico" alt="" />
-              <img
-                className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300"
-                src="https://nostr-pub.wellorder.net/favicon.ico"
-                alt=""
-              />
-              <img className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300" src="https://nos.lol//favicon.ico" alt="" />
-              <img className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300" src="https://snort.social/favicon.ico" alt="" />
-              <img className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300" src="https://nostr.wine//favicon.ico" alt="" />
-            </div>
-          </RelayMenu>
         </div>
         <div className="flex h-[22rem] flex-col md:flex-row">
           <div className="flex h-full w-full flex-col overflow-auto" onScroll={scrollView}>

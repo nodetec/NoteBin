@@ -28,7 +28,7 @@ export interface RelaysState {
   ) => void;
 }
 
-export const useRelays = create<RelaysState>((set) => ({
+export const useRelayStore = create<RelaysState>((set) => ({
   allRelays: RELAYS,
 
   setAllRelays: (newRelays: string[]) => {
@@ -53,7 +53,7 @@ export const useRelays = create<RelaysState>((set) => ({
 
     let relay: Relay;
     let existingRelay: Relay | undefined;
-    const connectedRelays = useRelays.getState().connectedRelays;
+    const connectedRelays = useRelayStore.getState().connectedRelays;
     if (connectedRelays.size > 0) {
       existingRelay = Array.from(connectedRelays).find(
         (r) => r.url === newRelayUrl
@@ -63,7 +63,7 @@ export const useRelays = create<RelaysState>((set) => ({
     if (existingRelay) {
       console.log("info", `✅ nostr (${newRelayUrl}): Already connected!`);
       relay = existingRelay;
-      useRelays.setState({ activeRelay: relay });
+      useRelayStore.setState({ activeRelay: relay });
     } else {
       console.log("NEWING UP A RELAY");
       relay = relayInit(newRelayUrl);
@@ -72,10 +72,10 @@ export const useRelays = create<RelaysState>((set) => ({
 
       relay.on("connect", () => {
         console.log("info", `✅ nostr (${newRelayUrl}): Connected!`);
-        const relayUrl = useRelays.getState().relayUrl;
+        const relayUrl = useRelayStore.getState().relayUrl;
         if (relayUrl === relay.url) {
-          useRelays.setState({ activeRelay: relay });
-          const connectedRelays = useRelays.getState().connectedRelays;
+          useRelayStore.setState({ activeRelay: relay });
+          const connectedRelays = useRelayStore.getState().connectedRelays;
           const isRelayInSet = Array.from(connectedRelays).some(
             (r) => r.url === relay.url
           );
@@ -119,7 +119,7 @@ export const useRelays = create<RelaysState>((set) => ({
   ) => {
     console.log("publishing to relays:", relays);
     for (const url of relays) {
-      const relay = await useRelays.getState().connect(url);
+      const relay = await useRelayStore.getState().connect(url);
 
       if (!relay) return;
 
@@ -151,7 +151,7 @@ export const useRelays = create<RelaysState>((set) => ({
     onEOSE: () => void
   ) => {
     for (const url of relays) {
-      const relay = await useRelays.getState().connect(url);
+      const relay = await useRelayStore.getState().connect(url);
 
       if (!relay) return;
 
@@ -166,7 +166,6 @@ export const useRelays = create<RelaysState>((set) => ({
         // console.log("we've reached the end:");
         sub.unsub();
         onEOSE();
-        // relay.close();
       });
     }
   },

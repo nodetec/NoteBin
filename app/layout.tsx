@@ -4,6 +4,7 @@ import "@fontsource-variable/inter";
 import "@fontsource-variable/jetbrains-mono";
 
 import "./styles/globals.css";
+import Header from "./components/header/Header";
 
 export const metadata = {
   title: "notebin",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={theme?.value}>
       <body className="container mx-auto flex min-h-screen max-w-5xl flex-col bg-slate-50 px-4 transition-colors duration-500 dark:bg-smoke-800">
+        <Header />
         {children}
       </body>
     </html>
