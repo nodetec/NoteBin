@@ -6,7 +6,7 @@ import { useLightningStore } from "@/app/stores/lightningStore";
 import { useUserProfileStore } from "@/app/stores/userProfileStore";
 import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
 
-import Profile from "../profile/Profile";
+import UserProfile from "../profile/UserProfile";
 
 export default function Login({ children }: any) {
   const { userPublicKey, setUserPublicKey } = useUserProfileStore();
@@ -30,10 +30,8 @@ export default function Login({ children }: any) {
     }
   };
 
-  return mounted && (
-    <div>{userPublicKey === "" ? <button onClick={loginHandler}>{children}</button> : <Profile />}</div>
-  ) 
-    // : (
-    // <UserCircleIcon className="h-7 w-7 text-smoke-400" aria-hidden="true" />
+  return mounted && <div>{userPublicKey === "" ? <button onClick={loginHandler}>{children}</button> : <UserProfile />}</div>;
+  // : (
+  // <UserCircleIcon className="h-7 w-7 text-smoke-400" aria-hidden="true" />
   // );
 }
