@@ -46,7 +46,7 @@ export const SubmitButton = () => {
   return (
     <div className="mt-4 flex gap-2 items-center justify-center">
       <RelayMenu>
-        <div className="flex -space-x-2 overflow-hidden px-3">
+        <div className="flex -space-x-2 overflow-hidden px-3 py-1">
           <img className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300" src="https://damus.io/favicon.ico" alt="" />
           <img
             className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300"
