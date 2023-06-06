@@ -11,7 +11,7 @@ import { EventProfileContent, Profile } from "../../types";
 import UserMenu from "../menus/UserMenu";
 
 export default function UserProfile() {
-  const { subscribe, activeRelay, connect, relayUrl } = useRelayStore();
+  const { subscribe, activeRelay, connect, relayUrl, setRelayUrl } = useRelayStore();
   const { getUserPublicKey, getUserProfile, setUserProfile } = useUserProfileStore();
   const [currentProfile, setCurrentProfile] = useState<Profile>();
 
@@ -22,6 +22,7 @@ export default function UserProfile() {
   }, []);
 
   const getEvents = async () => {
+    console.log("GET EVENTS FOR", relayUrl);
     if (currentProfile && currentProfile.relay === relayUrl) {
       return;
     }
@@ -69,7 +70,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     getEvents();
-  }, [relayUrl, activeRelay]);
+  }, [relayUrl, activeRelay, setRelayUrl]);
 
   return (
     <>

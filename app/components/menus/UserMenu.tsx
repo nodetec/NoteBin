@@ -53,18 +53,18 @@ export default function Example({ children }: any) {
         leaveTo="opacity-0 translate-y-1"
       >
         <Popover.Panel className="absolute right-0 z-10 mt-2 flex w-screen max-w-min translate-x-4 px-4">
-          <div className="w-48 shrink rounded-md border bg-white py-2 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5 dark:border-smoke-500 dark:bg-smoke-700 dark:text-smoke-50">
-            <a href={"#"} className="mb-2 block border-b border-smoke-500 px-4 pb-2 pt-1">
+          <div className="w-48 shrink rounded-md border bg-white py-2 text-sm font-semibold leading-6 text-slate-700 shadow-lg ring-1 ring-gray-900/5 dark:border-smoke-500 dark:bg-smoke-700 dark:text-smoke-50">
+            <a href={"#"} className="mb-2 block border-b border-slate-200  px-4 pb-2 pt-1 dark:border-smoke-500">
               <p className="font-normal">{"Signed in as"}</p>
               {currentProfile && currentProfile.name && <p>{currentProfile.name}</p>}
             </a>
             {links.map((item) => (
-              <a key={item.name} href={item.href} className="block px-4 py-1 hover:bg-blue-600">
+              <a key={item.name} href={item.href} className="block px-4 py-1 hover:bg-blue-200 dark:hover:bg-blue-600">
                 {item.name}
               </a>
             ))}
-            <div className="mt-2 border-t border-smoke-500" />
-            <span onClick={signOut} className="cursor-pointer mt-2 block px-4 py-1 hover:bg-blue-600">
+            <div className="mt-2 border-t border-slate-200 dark:border-smoke-500" />
+            <span onClick={signOut} className="mt-2 block cursor-pointer px-4 py-1 hover:bg-blue-200 dark:hover:bg-blue-600">
               <p>{"Sign out"}</p>
             </span>
           </div>

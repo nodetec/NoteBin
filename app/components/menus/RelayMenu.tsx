@@ -1,58 +1,18 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
+import { useRelayInfoStore } from "@/app/stores/relayInfoStore";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
+import { RELAYS } from "../../lib/constants";
 import RelayCard from "./RelayCard";
 
 const tabs = [
   { name: "Read From", href: "#", current: true },
   { name: "Post To", href: "#", current: false },
-  { name: "Discover", href: "#", current: false },
+  // { name: "Settings", href: "#", current: false },
+  // { name: "Discover", href: "#", current: false },
 ];
-const team = [
-  {
-    name: "Damus",
-    handle: "relay.damus.io",
-    href: "#",
-    imageUrl: "https://damus.io/favicon.ico",
-    status: "online",
-  },
-  {
-    name: "Wellorder",
-    handle: "relay.wellorder.io",
-    href: "#",
-    imageUrl: "https://nostr-pub.wellorder.net/favicon.ico",
-    status: "online",
-  },
-  {
-    name: "Lol",
-    handle: "relay.lol.io",
-    href: "#",
-    imageUrl: "https://nos.lol//favicon.ico",
-    status: "online",
-  },
-  {
-    name: "Snore",
-    handle: "relay.snort.io",
-    href: "#",
-    imageUrl: "https://snort.social/favicon.ico",
-    status: "online",
-  },
-  {
-    name: "Wine",
-    handle: "relay.wine.io",
-    href: "#",
-    imageUrl: "https://nostr.wine//favicon.ico",
-    status: "online",
-  },
-];
-
-// current active relay
-//// show relay
-// your relays
-//// show the relays you saved
-// add relay
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -60,6 +20,41 @@ function classNames(...classes: any) {
 
 export default function RelayMenu({ children }: any) {
   const [open, setOpen] = useState(false);
+
+  const [currentTab, setCurrentTab] = useState(tabs[0].name);
+
+  const { addRelay, getRelay } = useRelayInfoStore();
+
+  // get and store relay info for all relays eventually use relay list here
+
+  // add refresh button
+
+  useEffect(() => {
+    RELAYS.forEach((relayUrl) => {
+      const cachedRelayInfo = getRelay(relayUrl);
+      let relayHttpUrl = relayUrl.replace("wss://", "https://");
+      if (cachedRelayInfo === undefined) {
+        console.log("wss URL", relayUrl);
+        console.log("http URL", relayHttpUrl);
+        const getRelayInfo = async (url: string) => {
+          try {
+            const response = await fetch(url, {
+              headers: {
+                Accept: "application/nostr+json",
+              },
+            });
+            const data = await response.json();
+            addRelay(relayUrl, data);
+          } catch (error) {
+            console.error(`Error fetching relay information: ${error}`);
+          }
+        };
+        getRelayInfo(relayHttpUrl);
+      } else {
+        console.log("Cached relay info:", cachedRelayInfo);
+      }
+    });
+  }, [addRelay, getRelay]);
 
   return (
     <>
@@ -87,11 +82,11 @@ export default function RelayMenu({ children }: any) {
                     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl dark:bg-smoke-700">
                       <div className="p-6">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-base font-semibold leading-6 text-gray-900 dark:text-smoke-50">Relays</Dialog.Title>
+                          <Dialog.Title className="text-base font-semibold leading-6 text-slate-900 dark:text-smoke-50">Relays</Dialog.Title>
                           <div className="ml-3 flex h-7 items-center">
                             <button
                               type="button"
-                              className="rounded-md bg-white text-gray-400 hover:text-gray-500 dark:bg-smoke-700 dark:text-smoke-300 dark:hover:text-smoke-200"
+                              className="rounded-md bg-white text-slate-400 hover:text-slate-500 dark:bg-smoke-700 dark:text-smoke-300 dark:hover:text-smoke-100"
                               onClick={() => setOpen(false)}
                             >
                               <span className="sr-only">Close panel</span>
@@ -100,7 +95,7 @@ export default function RelayMenu({ children }: any) {
                           </div>
                         </div>
                       </div>
-                      <div className="border-b border-gray-200 dark:border-smoke-500">
+                      <div className="border-b border-slate-200 dark:border-smoke-500">
                         <div className="px-6">
                           <nav className="-mb-px flex space-x-6" x-descriptions="Tab component">
                             {tabs.map((tab) => (
@@ -108,11 +103,15 @@ export default function RelayMenu({ children }: any) {
                                 key={tab.name}
                                 href={tab.href}
                                 className={classNames(
-                                  tab.current
-                                    ? "border-blue-300 text-blue-400"
-                                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
+                                  currentTab === tab.name
+                                    ? "border-blue-300 text-blue-400 dark:border-blue-500 dark:text-blue-400"
+                                    : "border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:hover:border-smoke-100 dark:text-smoke-400 dark:hover:text-smoke-100",
                                   "whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium"
                                 )}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setCurrentTab(tab.name);
+                                }}
                               >
                                 {tab.name}
                               </a>
@@ -120,9 +119,9 @@ export default function RelayMenu({ children }: any) {
                           </nav>
                         </div>
                       </div>
-                      <ul role="list" className="flex-1 divide-y divide-gray-200 overflow-y-auto dark:divide-smoke-500">
-                        {team.map((person) => (
-                          <RelayCard relay={person} />
+                      <ul role="list" className="flex-1 divide-y divide-slate-200 overflow-y-auto dark:divide-smoke-500">
+                        {RELAYS.map((relayUrl) => (
+                          <RelayCard key={relayUrl} relayUrl={relayUrl} currentTab={currentTab} />
                         ))}
                       </ul>
                     </div>

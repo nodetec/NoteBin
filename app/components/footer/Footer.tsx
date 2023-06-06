@@ -19,7 +19,7 @@ export default function Footer() {
             target="_blank"
             rel="nofollow noopener noreferrer"
             href="https://github.com/nodetec"
-            className="text-smoke-400 hover:text-smoke-500"
+            className="text-smoke-400 hover:text-smoke-100"
           >
             <span className="sr-only">GitHub</span>
             <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -35,7 +35,7 @@ export default function Footer() {
             target="_blank"
             rel="nofollow noopener noreferrer"
             href="https://discord.gg/xaHqtSFW8b"
-            className="text-smoke-400 hover:text-smoke-500"
+            className="text-smoke-400 hover:text-smoke-100"
           >
             <span className="sr-only">Discord</span>
             <svg className="h-6 w-6" viewBox="0 0 24 24">
@@ -49,7 +49,7 @@ export default function Footer() {
             target="_blank"
             rel="nofollow noopener noreferrer"
             href="https://twitch.tv/chrisatmachine"
-            className="text-smoke-400 hover:text-smoke-500"
+            className="text-smoke-400 hover:text-smoke-100"
           >
             <span className="sr-only">Twitch</span>
             <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -64,7 +64,7 @@ export default function Footer() {
             target="_blank"
             rel="nofollow noopener noreferrer"
             href="https://twitter.com/node_tec"
-            className="text-smoke-400 hover:text-smoke-500"
+            className="text-smoke-400 hover:text-smoke-100"
           >
             <span className="sr-only">Twitter</span>
             <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -75,7 +75,7 @@ export default function Footer() {
             target="_blank"
             rel="nofollow noopener noreferrer"
             href="https://www.youtube.com/@nodetec"
-            className="text-smoke-400 hover:text-smoke-500"
+            className="text-smoke-400 hover:text-smoke-100"
           >
             <span className="sr-only">YouTube</span>
             <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
