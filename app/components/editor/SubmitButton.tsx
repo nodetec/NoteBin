@@ -1,10 +1,22 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+import { usePostRelayStore } from "@/app/stores/postRelayStore";
 import { generatePrivateKey, getEventHash, getPublicKey, getSignature, relayInit } from "nostr-tools";
 
 import { useTextStore } from "../../stores/textStore";
 import RelayMenu from "../menus/RelayMenu";
 
 export const SubmitButton = () => {
+  const { postRelays } = usePostRelayStore();
   const { text } = useTextStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const handleSubmit = async () => {
     // const relay = relayInit("wss://nostr-pub.wellorder.net");
     // relay.on("connect", () => {
@@ -44,20 +56,23 @@ export const SubmitButton = () => {
   };
 
   return (
-    <div className="mt-4 flex gap-2 items-center justify-center">
-      <RelayMenu>
-        <div className="flex -space-x-2 overflow-hidden px-3 py-1">
-          <img className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300" src="https://damus.io/favicon.ico" alt="" />
-          <img
-            className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300"
-            src="https://nostr-pub.wellorder.net/favicon.ico"
-            alt=""
-          />
-          <img className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300" src="https://nos.lol//favicon.ico" alt="" />
-          <img className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300" src="https://snort.social/favicon.ico" alt="" />
-          <img className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300" src="https://nostr.wine//favicon.ico" alt="" />
-        </div>
-      </RelayMenu>
+    <div className="mt-4 flex items-center justify-center gap-2">
+      {mounted && (
+        <RelayMenu>
+          <div className="flex -space-x-2 overflow-hidden px-3 py-1">
+            {postRelays.map(
+              (postRelay) =>
+                postRelay.isActive && (
+                  <img
+                    className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300"
+                    src={postRelay.url.replace("wss://", "https://").replace("relay.", "") + "/favicon.ico"}
+                    alt=""
+                  />
+                )
+            )}
+          </div>
+        </RelayMenu>
+      )}
       <button
         onClick={handleSubmit}
         className="rounded bg-blue-600 px-3 py-[0.35rem] text-sm font-semibold text-slate-50 hover:bg-blue-500"

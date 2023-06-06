@@ -6,6 +6,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import ReadRelayCards from "./ReadRelayCards";
+import PostRelayCards from "./PostRelayCards";
 
 const tabs = [
   { name: "Read From", href: "#", current: true },
@@ -122,6 +123,7 @@ export default function RelayMenu({ children }: any) {
                       </div>
                       <ul role="list" className="flex-1 divide-y divide-slate-200 overflow-y-auto dark:divide-smoke-500">
                         {currentTab === "Read From" && <ReadRelayCards />}
+                        {currentTab === "Post To" && <PostRelayCards />}
                       </ul>
                     </div>
                   </Dialog.Panel>

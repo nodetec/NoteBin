@@ -7,18 +7,18 @@ type Relay = {
 };
 
 interface RelayState {
-  activeRelays: Relay[];
-  addRelay: (relay: Relay) => void;
-  removeRelay: (url: string) => void;
-  updateRelayStatus: (url: string, isActive: boolean) => void;
-  sortRelays: () => void;
+  postRelays: Relay[];
+  addPostRelay: (relay: Relay) => void;
+  removePostRelay: (url: string) => void;
+  updatePostRelayStatus: (url: string, isActive: boolean) => void;
+  sortPostRelays: () => void;
 }
 
-export const useActivePostRelayStore = create<RelayState>()(
+export const usePostRelayStore = create<RelayState>()(
   devtools(
     persist(
       (set) => ({
-        activeRelays: [
+        postRelays: [
           { url: "wss://relay.damus.io", isActive: true },
           { url: "wss://nos.lol", isActive: false },
           { url: "wss://relay.snort.social", isActive: false },
@@ -26,17 +26,17 @@ export const useActivePostRelayStore = create<RelayState>()(
           { url: "wss://nostr.wine/", isActive: false },
           { url: "wss://nostr.zebedee.cloud", isActive: false },
         ],
-        addRelay: (relay) => set((state) => ({ activeRelays: [...state.activeRelays, relay] })),
-        removeRelay: (url) => set((state) => ({ activeRelays: state.activeRelays.filter((relay) => relay.url !== url) })),
-        updateRelayStatus: (url, isActive) =>
+        addPostRelay: (relay) => set((state) => ({ postRelays: [...state.postRelays, relay] })),
+        removePostRelay: (url) => set((state) => ({ postRelays: state.postRelays.filter((relay) => relay.url !== url) })),
+        updatePostRelayStatus: (url, isActive) =>
           set((state) => {
-            const updatedRelays = state.activeRelays.map((relay) => (relay.url === url ? { ...relay, isActive } : relay));
-            return { activeRelays: updatedRelays };
+            const updatedRelays = state.postRelays.map((relay) => (relay.url === url ? { ...relay, isActive } : relay));
+            return { postRelays: updatedRelays };
           }),
-        sortRelays: () =>
+        sortPostRelays: () =>
           set((state) => {
-            const sortedRelays = [...state.activeRelays].sort((a, b) => (a.isActive === b.isActive ? 0 : a.isActive ? -1 : 1));
-            return { activeRelays: sortedRelays };
+            const sortedRelays = [...state.postRelays].sort((a, b) => (a.isActive === b.isActive ? 0 : a.isActive ? -1 : 1));
+            return { postRelays: sortedRelays };
           }),
       }),
       {
