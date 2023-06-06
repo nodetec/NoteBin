@@ -1,11 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
 
 import { useRelayInfoStore } from "@/app/stores/relayInfoStore";
+import { useRelayStore } from "@/app/stores/relayStore";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import { RELAYS } from "../../lib/constants";
-import RelayCard from "./RelayCard";
+import ReadRelayCards from "./ReadRelayCards";
 
 const tabs = [
   { name: "Read From", href: "#", current: true },
@@ -22,20 +22,19 @@ export default function RelayMenu({ children }: any) {
   const [open, setOpen] = useState(false);
 
   const [currentTab, setCurrentTab] = useState(tabs[0].name);
+  const { allRelays } = useRelayStore();
 
-  const { addRelay, getRelay } = useRelayInfoStore();
+  const { addRelayInfo, getRelayInfo } = useRelayInfoStore();
 
   // get and store relay info for all relays eventually use relay list here
 
   // add refresh button
 
   useEffect(() => {
-    RELAYS.forEach((relayUrl) => {
-      const cachedRelayInfo = getRelay(relayUrl);
+    allRelays.forEach((relayUrl) => {
+      const cachedRelayInfo = getRelayInfo(relayUrl);
       let relayHttpUrl = relayUrl.replace("wss://", "https://");
       if (cachedRelayInfo === undefined) {
-        console.log("wss URL", relayUrl);
-        console.log("http URL", relayHttpUrl);
         const getRelayInfo = async (url: string) => {
           try {
             const response = await fetch(url, {
@@ -44,7 +43,7 @@ export default function RelayMenu({ children }: any) {
               },
             });
             const data = await response.json();
-            addRelay(relayUrl, data);
+            addRelayInfo(relayUrl, data);
           } catch (error) {
             console.error(`Error fetching relay information: ${error}`);
           }
@@ -54,7 +53,7 @@ export default function RelayMenu({ children }: any) {
         console.log("Cached relay info:", cachedRelayInfo);
       }
     });
-  }, [addRelay, getRelay]);
+  }, [addRelayInfo, getRelayInfo]);
 
   return (
     <>
@@ -82,7 +81,9 @@ export default function RelayMenu({ children }: any) {
                     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl dark:bg-smoke-700">
                       <div className="p-6">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-base font-semibold leading-6 text-slate-900 dark:text-smoke-50">Relays</Dialog.Title>
+                          <Dialog.Title className="text-base font-semibold leading-6 text-slate-900 dark:text-smoke-50">
+                            Relays
+                          </Dialog.Title>
                           <div className="ml-3 flex h-7 items-center">
                             <button
                               type="button"
@@ -105,7 +106,7 @@ export default function RelayMenu({ children }: any) {
                                 className={classNames(
                                   currentTab === tab.name
                                     ? "border-blue-300 text-blue-400 dark:border-blue-500 dark:text-blue-400"
-                                    : "border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:hover:border-smoke-100 dark:text-smoke-400 dark:hover:text-smoke-100",
+                                    : "border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:text-smoke-400 dark:hover:border-smoke-200 dark:hover:text-smoke-200",
                                   "whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium"
                                 )}
                                 onClick={(e) => {
@@ -120,9 +121,7 @@ export default function RelayMenu({ children }: any) {
                         </div>
                       </div>
                       <ul role="list" className="flex-1 divide-y divide-slate-200 overflow-y-auto dark:divide-smoke-500">
-                        {RELAYS.map((relayUrl) => (
-                          <RelayCard key={relayUrl} relayUrl={relayUrl} currentTab={currentTab} />
-                        ))}
+                        {currentTab === "Read From" && <ReadRelayCards />}
                       </ul>
                     </div>
                   </Dialog.Panel>

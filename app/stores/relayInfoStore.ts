@@ -35,24 +35,24 @@ interface InfoState {
 }
 
 interface RelayStore {
-  relays: Record<string, InfoState>;
-  addRelay: (relayUrl: string, info: InfoState) => void;
-  getRelay: (relayUrl: string) => InfoState;
-  removeRelay: (relayUrl: string) => void;
+  relayInfoRecord: Record<string, InfoState>;
+  addRelayInfo: (relayUrl: string, info: InfoState) => void;
+  getRelayInfo: (relayUrl: string) => InfoState;
+  removeRelayInfo: (relayUrl: string) => void;
 }
 
 export const useRelayInfoStore = create<RelayStore>()(
   devtools(
     persist(
       (set, get) => ({
-        relays: {},
-        addRelay: (relayUrl, info) => set((state) => ({ relays: { ...state.relays, [relayUrl]: info } })),
-        getRelay: (relayUrl) => get().relays[relayUrl],
+        relayInfoRecord: {},
+        addRelayInfo: (relayUrl, info) => set((state) => ({ relayInfoRecord: { ...state.relayInfoRecord, [relayUrl]: info } })),
+        getRelayInfo: (relayUrl) => get().relayInfoRecord[relayUrl],
         // getRelay: (relayUrl) => state => state.relays[relayUrl],
-        removeRelay: (relayUrl) =>
+        removeRelayInfo: (relayUrl) =>
           set((state) => {
-            const { [relayUrl]: removedRelay, ...remainingRelays } = state.relays;
-            return { relays: remainingRelays };
+            const { [relayUrl]: removedRelay, ...remainingRelays } = state.relayInfoRecord;
+            return { relayInfoRecord: remainingRelays };
           }),
       }),
       {
