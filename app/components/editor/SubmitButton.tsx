@@ -64,6 +64,7 @@ export const SubmitButton = () => {
               (postRelay) =>
                 postRelay.isActive && (
                   <img
+                    key={postRelay.url}
                     className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300"
                     src={postRelay.url.replace("wss://", "https://").replace("relay.", "") + "/favicon.ico"}
                     alt=""
