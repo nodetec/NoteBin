@@ -1,22 +1,32 @@
 import { usePostRelayStore } from "@/app/stores/postRelayStore";
-
-import { useRelayInfoStore } from "../../stores/relayInfoStore";
+import { useRelayInfoStore } from "@/app/stores/relayInfoStore";
 
 export default function ReadRelayCards() {
   const { getRelayInfo } = useRelayInfoStore();
-  const { postRelays, updatePostRelayStatus, sortPostRelays } = usePostRelayStore();
+  const { postRelays, updatePostRelayStatus, sortPostRelays, countActivePostRelays } = usePostRelayStore();
 
   // TODO: show paid
 
   const handleSetPostActive = (postRelay: any) => {
-    console.log("Setting read active");
+    // console.log("Setting read active");
+
+    if (countActivePostRelays() === 5) {
+      alert("You can only have 5 active post relays.");
+      return;
+    }
+
     updatePostRelayStatus(postRelay.url, true);
     // TODO: maybe sort relays on component unmount?
     sortPostRelays();
   };
 
   const handleRemovePostActive = (postRelay: any) => {
-    console.log("Setting read active");
+    // console.log("Setting read active");
+
+    if (countActivePostRelays() === 1) {
+      alert("You must have at least one active post relay.");
+      return;
+    }
     updatePostRelayStatus(postRelay.url, false);
     // TODO: maybe sort relays on component unmount?
     sortPostRelays();
@@ -62,7 +72,7 @@ export default function ReadRelayCards() {
                   onClick={() => handleRemovePostActive(postRelay)}
                   className="z-20 inline-flex items-center rounded-md bg-red-50 px-3 py-2 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 hover:ring-red-500/50 dark:bg-red-400/10 dark:text-red-400 dark:ring-red-400/20 dark:hover:ring-red-400/60"
                 >
-                  Remove
+                  Set Inactive
                 </button>
               ) : (
                 <button

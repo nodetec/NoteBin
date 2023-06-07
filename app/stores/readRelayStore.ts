@@ -8,7 +8,7 @@ type Relay = {
 
 interface RelayState {
   readRelays: Relay[];
-  addReadRelay: (relay: Relay) => void;
+  addReadRelay: (url: string, isActive: boolean) => void;
   removeReadRelay: (url: string) => void;
   updateReadRelayStatus: (url: string, isActive: boolean) => void;
   sortReadRelays: () => void;
@@ -29,7 +29,7 @@ export const useReadRelayStore = create<RelayState>()(
           { url: "wss://nostr.wine/", isActive: false },
           { url: "wss://nostr.zebedee.cloud", isActive: false },
         ],
-        addReadRelay: (relay) => set((state) => ({ readRelays: [...state.readRelays, relay] })),
+        addReadRelay: (url, isActive) => set((state) => ({ readRelays: [...state.readRelays, { url, isActive }] })),
         removeReadRelay: (url) => set((state) => ({ readRelays: state.readRelays.filter((relay) => relay.url !== url) })),
         updateReadRelayStatus: (url, isActive) =>
           set((state) => {

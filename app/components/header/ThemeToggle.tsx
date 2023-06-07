@@ -29,9 +29,9 @@ export default function ThemeToggle({ theme }: Props) {
     <>
       <button className="hidden outline-none focus:ring-0 sm:block" onClick={toggleTheme}>
         {_theme === Theme.light ? (
-          <SunIcon className="h-5 w-5 text-orange-500" aria-hidden="true" />
+          <SunIcon className="h-6 w-6 text-orange-500" aria-hidden="true" />
         ) : (
-          <MoonIcon className="h-5 w-5 text-purple-500" aria-hidden="true" />
+          <MoonIcon className="h-6 w-6 text-purple-500" aria-hidden="true" />
         )}
       </button>
     </>

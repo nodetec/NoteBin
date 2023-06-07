@@ -74,7 +74,7 @@ export default function UserProfile() {
 
   return (
     <>
-      <UserMenu>{currentProfile && <img className="inline-block h-7 w-7 rounded-full" src={currentProfile.picture} alt="" />}</UserMenu>
+      <UserMenu>{currentProfile && <img className="inline-block h-6 w-6 rounded-full" src={currentProfile.picture} alt="" />}</UserMenu>
     </>
   );
 }

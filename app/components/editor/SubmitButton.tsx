@@ -11,7 +11,7 @@ export const SubmitButton = () => {
   const { postRelays } = usePostRelayStore();
   const { text } = useTextStore();
   const [mounted, setMounted] = useState(false);
-  const { relayMenuActiveTab, setRelayMenuActiveTab, relayMenuIsOpen, setRelayMenuIsOpen } = useRelayMenuStore();
+  const { setRelayMenuActiveTab, setRelayMenuIsOpen } = useRelayMenuStore();
 
   useEffect(() => {
     setMounted(true);
@@ -58,8 +58,6 @@ export const SubmitButton = () => {
   const handleRelayMenuClick = () => {
     setRelayMenuActiveTab("Post To");
     setRelayMenuIsOpen(true);
-    console.log("relayMenuActiveTab", relayMenuActiveTab);
-    console.log("relayMenuIsOpen", relayMenuIsOpen);
   };
 
   return (
