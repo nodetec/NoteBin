@@ -11,6 +11,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import PostRelayCards from "./PostRelayCards";
 import ReadRelayCards from "./ReadRelayCards";
 import RelaySettings from "./RelaySettings";
+import RelayDiscover from "./RelayDiscover";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -136,7 +137,7 @@ export default function RelayMenu() {
                           <RelaySettings />
                         </>
                       )}
-                      {relayMenuActiveTab === "Discover" && <RelaySettings />}
+                      {relayMenuActiveTab === "Discover" && <RelayDiscover />}
                     </ul>
                   </div>
                 </Dialog.Panel>

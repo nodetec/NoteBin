@@ -6,10 +6,10 @@ import { useRelayInfoStore } from "../../stores/relayInfoStore";
 
 export default function RelaySettings() {
   const { getRelayInfo } = useRelayInfoStore();
-  const { setRelayUrl, allRelays, relayUrl } = useRelayStore();
-  const { readRelays, updateReadRelayStatus, sortReadRelays, setAllReadRelaysInactive, addReadRelay, removeReadRelay } =
+  const { allRelays, relayUrl } = useRelayStore();
+  const { readRelays, addReadRelay, removeReadRelay } =
     useReadRelayStore();
-  const { postRelays, updatePostRelayStatus, sortPostRelays, countActivePostRelays, addPostRelay, removePostRelay, checkPostRelayStatus } =
+  const { postRelays, countActivePostRelays, addPostRelay, removePostRelay, checkPostRelayStatus } =
     usePostRelayStore();
 
   const handleAddReadRelay = (readRelay: any) => {
