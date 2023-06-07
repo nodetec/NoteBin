@@ -6,10 +6,11 @@ import { Profile } from "@/app/types";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
+import RelayMenu from "./RelayMenu";
+
 const links = [
   { name: "Your Notes", href: "#" },
   { name: "Bookmarked Notes", href: "#" },
-  { name: "Set Relays", href: "#" },
   // create faq page later https://github.com/vercel/next.js/discussions/17443
   // { name: "Help", href: "#" },
 ];
@@ -55,7 +56,7 @@ export default function Example({ children }: any) {
         <Popover.Panel className="absolute right-0 z-10 mt-2 flex w-screen max-w-min translate-x-4 px-4">
           <div className="w-48 shrink rounded-md border bg-white py-2 text-sm font-semibold leading-6 text-slate-700 shadow-lg ring-1 ring-gray-900/5 dark:border-smoke-500 dark:bg-smoke-700 dark:text-smoke-50">
             <a href={"#"} className="mb-2 block border-b border-slate-200  px-4 pb-2 pt-1 dark:border-smoke-500">
-              <p className="font-normal">{"Signed in as"}</p>
+              {/* <p className="font-normal">{"Signed in as"}</p> */}
               {currentProfile && currentProfile.name && <p>{currentProfile.name}</p>}
             </a>
             {links.map((item) => (
@@ -63,6 +64,10 @@ export default function Example({ children }: any) {
                 {item.name}
               </a>
             ))}
+            <RelayMenu tab="Read From">
+              {/* TODO: close menu when this is clicked */}
+              <span className="block px-4 py-1 w-full text-left hover:bg-blue-200 dark:hover:bg-blue-600">Set Relays</span>
+            </RelayMenu>
             <div className="mt-2 border-t border-slate-200 dark:border-smoke-500" />
             <span onClick={signOut} className="mt-2 block cursor-pointer px-4 py-1 hover:bg-blue-200 dark:hover:bg-blue-600">
               <p>{"Sign out"}</p>

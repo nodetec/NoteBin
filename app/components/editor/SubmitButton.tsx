@@ -3,15 +3,15 @@
 import { useEffect, useState } from "react";
 
 import { usePostRelayStore } from "@/app/stores/postRelayStore";
-import { generatePrivateKey, getEventHash, getPublicKey, getSignature, relayInit } from "nostr-tools";
+import { useRelayMenuStore } from "@/app/stores/relayMenuStore";
 
 import { useTextStore } from "../../stores/textStore";
-import RelayMenu from "../menus/RelayMenu";
 
 export const SubmitButton = () => {
   const { postRelays } = usePostRelayStore();
   const { text } = useTextStore();
   const [mounted, setMounted] = useState(false);
+  const { relayMenuActiveTab, setRelayMenuActiveTab, relayMenuIsOpen, setRelayMenuIsOpen } = useRelayMenuStore();
 
   useEffect(() => {
     setMounted(true);
@@ -55,15 +55,23 @@ export const SubmitButton = () => {
     console.log("submit", text);
   };
 
+  const handleRelayMenuClick = () => {
+    setRelayMenuActiveTab("Post To");
+    setRelayMenuIsOpen(true);
+    console.log("relayMenuActiveTab", relayMenuActiveTab);
+    console.log("relayMenuIsOpen", relayMenuIsOpen);
+  };
+
   return (
     <div className="mt-4 flex items-center justify-center gap-2">
       {mounted && (
-        <RelayMenu>
+        <div className="flex cursor-pointer items-end justify-end">
           <div className="flex -space-x-2 overflow-hidden px-3 py-1">
             {postRelays.map(
               (postRelay) =>
                 postRelay.isActive && (
                   <img
+                    onClick={handleRelayMenuClick}
                     key={postRelay.url}
                     className="inline-block h-6 w-6 rounded-full ring-1 ring-smoke-300"
                     src={postRelay.url.replace("wss://", "https://").replace("relay.", "") + "/favicon.ico"}
@@ -72,7 +80,7 @@ export const SubmitButton = () => {
                 )
             )}
           </div>
-        </RelayMenu>
+        </div>
       )}
       <button
         onClick={handleSubmit}

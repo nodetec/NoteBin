@@ -23,3 +23,5 @@ export type Profile = {
   picture: string;
   website: string;
 };
+
+export type RelayMenuActiveTab = "Read From" | "Post To" | "Settings" | "Discover";
