@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Fragment, useEffect } from "react";
 
@@ -118,9 +118,25 @@ export default function RelayMenu() {
                       </div>
                     </div>
                     <ul role="list" className="flex-1 divide-y divide-slate-200 overflow-y-auto dark:divide-smoke-500">
-                      {relayMenuActiveTab === "Read From" && <ReadRelayCards />}
-                      {relayMenuActiveTab === "Post To" && <PostRelayCards />}
-                      {relayMenuActiveTab === "Settings" && <RelaySettings />}
+                      {relayMenuActiveTab === "Read From" && (
+                        <>
+                          <p className="px-4 py-2 dark:bg-smoke-800 dark:text-smoke-300">Choose a relay to read content from</p>
+                          <ReadRelayCards />
+                        </>
+                      )}
+                      {relayMenuActiveTab === "Post To" && (
+                        <>
+                          <p className="px-4 py-2 dark:bg-smoke-800 dark:text-smoke-300">Choose up to 5 relays to post content to</p>
+                          <PostRelayCards />
+                        </>
+                      )}
+                      {relayMenuActiveTab === "Settings" && (
+                        <>
+                          <p className="px-4 py-2 dark:bg-smoke-800 dark:text-smoke-300">Determine what each relay will be used for</p>
+                          <RelaySettings />
+                        </>
+                      )}
+                      {relayMenuActiveTab === "Discover" && <RelaySettings />}
                     </ul>
                   </div>
                 </Dialog.Panel>
