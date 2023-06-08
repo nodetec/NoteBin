@@ -70,16 +70,19 @@ export default function Example({ children }: any) {
       >
         <Popover.Panel className="absolute right-0 z-10 mt-2 flex w-screen max-w-min translate-x-4 px-4">
           <div className="w-48 shrink rounded-md border bg-white py-2 text-sm font-semibold leading-6 text-slate-700 shadow-lg ring-1 ring-gray-900/5 dark:border-smoke-500 dark:bg-smoke-700 dark:text-smoke-50">
-            <span onClick={handleRelayMenuReadFromClick} className="mb-2 block cursor-pointer border-b border-slate-200  px-4 pb-2 pt-1 dark:border-smoke-500">
+            <span
+              onClick={handleRelayMenuReadFromClick}
+              className="mb-2 block cursor-pointer border-b border-slate-200  px-4 pb-2 pt-1 dark:border-smoke-500"
+            >
               {currentProfile && currentProfile.name && <p>{currentProfile.name}</p>}
               {currentProfile && currentProfile.name && (
-                <p className="flex gap-x-2 items-center mt-2 mb-1">
+                <p className="mb-1 mt-2 flex items-center gap-x-2">
                   <img
                     className="h-5 w-5 rounded-full"
                     src={relayUrl.replace("wss://", "https://").replace("relay.", "") + "/favicon.ico"}
                     alt=""
                   />
-                  <span className="text-slate-500 dark:text-smoke-200">{getRelayInfo(relayUrl).name}</span>
+                  {getRelayInfo(relayUrl) && <span className="text-slate-500 dark:text-smoke-200">{getRelayInfo(relayUrl).name}</span>}
                 </p>
               )}
             </span>

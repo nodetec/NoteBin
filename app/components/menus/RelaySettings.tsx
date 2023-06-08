@@ -1,16 +1,22 @@
+import { Fragment } from "react";
+
 import { usePostRelayStore } from "@/app/stores/postRelayStore";
 import { useReadRelayStore } from "@/app/stores/readRelayStore";
 import { useRelayStore } from "@/app/stores/relayStore";
+import { Menu, Transition } from "@headlessui/react";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 
 import { useRelayInfoStore } from "../../stores/relayInfoStore";
 
 export default function RelaySettings() {
   const { getRelayInfo } = useRelayInfoStore();
   const { allRelays, relayUrl } = useRelayStore();
-  const { readRelays, addReadRelay, removeReadRelay } =
-    useReadRelayStore();
-  const { postRelays, countActivePostRelays, addPostRelay, removePostRelay, checkPostRelayStatus } =
-    usePostRelayStore();
+  const { readRelays, addReadRelay, removeReadRelay } = useReadRelayStore();
+  const { postRelays, countActivePostRelays, addPostRelay, removePostRelay, checkPostRelayStatus } = usePostRelayStore();
+
+  function classNames(...classes: any[]) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   const handleAddReadRelay = (readRelay: any) => {
     console.log("Setting read relay");
@@ -67,62 +73,106 @@ export default function RelaySettings() {
 
   return (
     <>
-      {allRelays.map((relay) => (
-        <li key={relay}>
-          <div className="group relative flex items-center px-5 py-6">
-            <div className="-m-1 block flex-1 p-1">
-              <div className="absolute inset-0" aria-hidden="true" />
-              <div className="relative flex min-w-0 flex-1 items-center">
-                <span className="relative inline-block flex-shrink-0">
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src={relay.replace("wss://", "https://").replace("relay.", "") + "/favicon.ico"}
-                    alt=""
-                  />
-                </span>
-                <div className="ml-4 truncate">
-                  <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">{getRelayInfo(relay).name}</p>
-                  <p className="truncate text-sm text-slate-500">{getRelayInfo(relay).contact}</p>
+      <p className="px-4 py-2 dark:bg-smoke-800 dark:text-smoke-300">Determine what each relay will be used for</p>
+      <ul role="list" className="flex-1 divide-y divide-slate-200 overflow-y-auto dark:divide-smoke-500">
+        {allRelays.map((relay) => (
+          <li key={relay}>
+            <div className="group relative flex items-center px-5 py-6">
+              <div className="-m-1 block flex-1 p-1">
+                <div className="absolute inset-0" aria-hidden="true" />
+                <div className="relative flex min-w-0 flex-1 items-center">
+                  <span className="relative inline-block flex-shrink-0">
+                    <img
+                      className="h-10 w-10 rounded-full"
+                      src={relay.replace("wss://", "https://").replace("relay.", "") + "/favicon.ico"}
+                      alt=""
+                    />
+                  </span>
+                  <div className="ml-4 truncate">
+                    <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">{getRelayInfo(relay).name}</p>
+                    <p className="truncate text-sm text-slate-500">{getRelayInfo(relay).contact}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="flex gap-6">
-              {readRelays.map((relay) => relay.url).includes(relay) ? (
-                <button
-                  onClick={() => handleRemoveReadRelay(relay)}
-                  className="z-20 inline-flex items-center rounded-md bg-green-500/10 px-3 py-2 text-xs font-medium text-green-400 ring-1 ring-inset ring-green-500/20"
-                >
-                  Read
-                </button>
-              ) : (
-                <button
-                  onClick={() => handleAddReadRelay(relay)}
-                  className="z-20 inline-flex items-center rounded-md bg-gray-400/10 px-3 py-2 text-xs font-medium text-gray-400 ring-1 ring-inset ring-gray-400/20"
-                >
-                  Read
-                </button>
-              )}
-              <div className="flex gap-6">
+              <div className="flex gap-4">
+                {readRelays.map((relay) => relay.url).includes(relay) ? (
+                  <button
+                    onClick={() => handleRemoveReadRelay(relay)}
+                    className="z-20 inline-flex items-center rounded-md bg-green-50 px-3 py-2  text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/30 hover:ring-green-600/60 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20 dark:hover:ring-green-500/50"
+                  >
+                    Read
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleAddReadRelay(relay)}
+                    className="z-20 inline-flex items-center rounded-md bg-gray-50 px-3 py-2 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/20 hover:ring-gray-500/40 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20 dark:hover:ring-gray-400/50"
+                  >
+                    Read
+                  </button>
+                )}
                 {postRelays.map((relay) => relay.url).includes(relay) ? (
                   <button
                     onClick={() => handleRemovePostRelay(relay)}
-                    className="z-20 inline-flex items-center rounded-md bg-green-500/10 px-3 py-2 text-xs font-medium text-green-400 ring-1 ring-inset ring-green-500/20"
+                    className="z-20 inline-flex items-center rounded-md bg-green-50 px-3 py-2 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/30 hover:ring-green-600/60 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20 dark:hover:ring-green-500/50"
                   >
                     Post
                   </button>
                 ) : (
                   <button
                     onClick={() => handleAddPostRelay(relay)}
-                    className="z-20 inline-flex items-center rounded-md bg-gray-400/10 px-3 py-2 text-xs font-medium text-gray-400 ring-1 ring-inset ring-gray-400/20"
+                    className="z-20 inline-flex items-center rounded-md bg-gray-50 px-3 py-2 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/20 hover:ring-gray-500/40 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20 dark:hover:ring-gray-400/50"
                   >
                     Post
                   </button>
                 )}
               </div>
+
+              <Menu as="div" className="relative z-40 ml-2 inline-block flex-shrink-0 text-left">
+                <Menu.Button className="group relative inline-flex h-8 w-8 items-center justify-center focus:outline-none">
+                  <span className="sr-only">Open options menu</span>
+                  <span className="flex h-full w-full items-center justify-center rounded-full">
+                    <EllipsisVerticalIcon className="h-5 w-5 text-gray-400 dark:text-smoke-300 dark:hover:text-smoke-200" aria-hidden="true" />
+                  </span>
+                </Menu.Button>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="absolute right-9 top-0 z-10 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "block px-4 py-2 text-sm")}
+                          >
+                            Relay Info
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "block px-4 py-2 text-sm")}
+                          >
+                            Remove Relay
+                          </a>
+                        )}
+                      </Menu.Item>
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
             </div>
-          </div>
-        </li>
-      ))}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }

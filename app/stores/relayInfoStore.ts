@@ -22,6 +22,7 @@ type Fee = {
 
 interface InfoState {
   name: string;
+  url: string;
   description: string;
   pubkey: string;
   contact: string;
@@ -36,8 +37,9 @@ interface InfoState {
 
 interface RelayStore {
   relayInfoRecord: Record<string, InfoState>;
-  addRelayInfo: (relayUrl: string, info: InfoState) => void;
+  addRelayInfo: (relayUrl: string, info: Omit<InfoState, "url">) => void;
   getRelayInfo: (relayUrl: string) => InfoState;
+  getAllRelayInfo: () => InfoState[];
   removeRelayInfo: (relayUrl: string) => void;
 }
 
@@ -46,9 +48,19 @@ export const useRelayInfoStore = create<RelayStore>()(
     persist(
       (set, get) => ({
         relayInfoRecord: {},
-        addRelayInfo: (relayUrl, info) => set((state) => ({ relayInfoRecord: { ...state.relayInfoRecord, [relayUrl]: info } })),
+        // addRelayInfo: (relayUrl, info) => set((state) => ({ relayInfoRecord: { ...state.relayInfoRecord, [relayUrl]: info } })),
+        addRelayInfo: (relayUrl, info) =>
+          set((state) => ({
+            relayInfoRecord: {
+              ...state.relayInfoRecord,
+              [relayUrl]: { ...info, url: relayUrl },
+            },
+          })),
         getRelayInfo: (relayUrl) => get().relayInfoRecord[relayUrl],
-        // getRelay: (relayUrl) => state => state.relays[relayUrl],
+        getAllRelayInfo: () => {
+          const state = get();
+          return Object.values(state.relayInfoRecord);
+        },
         removeRelayInfo: (relayUrl) =>
           set((state) => {
             const { [relayUrl]: removedRelay, ...remainingRelays } = state.relayInfoRecord;

@@ -10,8 +10,8 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import PostRelayCards from "./PostRelayCards";
 import ReadRelayCards from "./ReadRelayCards";
-import RelaySettings from "./RelaySettings";
 import RelayDiscover from "./RelayDiscover";
+import RelaySettings from "./RelaySettings";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -29,14 +29,6 @@ export default function RelayMenu() {
   // TODO: add refresh button
 
   useEffect(() => {
-    console.log("RelayMenuTabs", RelayMenuTabs);
-  }, [RelayMenuTabs, relayMenuIsOpen]);
-
-  useEffect(() => {
-    console.log("AM I OPENING");
-  }, []);
-
-  useEffect(() => {
     allRelays.forEach((relayUrl) => {
       const cachedRelayInfo = getRelayInfo(relayUrl);
       let relayHttpUrl = relayUrl.replace("wss://", "https://");
@@ -49,6 +41,7 @@ export default function RelayMenu() {
               },
             });
             const data = await response.json();
+            // data.url = relayUrl;
             addRelayInfo(relayUrl, data);
           } catch (error) {
             console.error(`Error fetching relay information: ${error}`);
@@ -118,27 +111,10 @@ export default function RelayMenu() {
                         </nav>
                       </div>
                     </div>
-                    <ul role="list" className="flex-1 divide-y divide-slate-200 overflow-y-auto dark:divide-smoke-500">
-                      {relayMenuActiveTab === "Read From" && (
-                        <>
-                          <p className="px-4 py-2 dark:bg-smoke-800 dark:text-smoke-300">Choose a relay to read content from</p>
-                          <ReadRelayCards />
-                        </>
-                      )}
-                      {relayMenuActiveTab === "Post To" && (
-                        <>
-                          <p className="px-4 py-2 dark:bg-smoke-800 dark:text-smoke-300">Choose up to 5 relays to post content to</p>
-                          <PostRelayCards />
-                        </>
-                      )}
-                      {relayMenuActiveTab === "Settings" && (
-                        <>
-                          <p className="px-4 py-2 dark:bg-smoke-800 dark:text-smoke-300">Determine what each relay will be used for</p>
-                          <RelaySettings />
-                        </>
-                      )}
-                      {relayMenuActiveTab === "Discover" && <RelayDiscover />}
-                    </ul>
+                    {relayMenuActiveTab === "Read From" && <ReadRelayCards />}
+                    {relayMenuActiveTab === "Post To" && <PostRelayCards />}
+                    {relayMenuActiveTab === "Settings" && <RelaySettings />}
+                    {relayMenuActiveTab === "Discover" && <RelayDiscover />}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

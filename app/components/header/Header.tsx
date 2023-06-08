@@ -27,12 +27,15 @@ export default function Header() {
         <Link className="cursor-pointer text-sm hover:underline dark:text-smoke-300" href="/explore">
           Explore
         </Link>
+        <Link className="cursor-pointer text-sm hover:underline dark:text-smoke-300" href="/explore">
+          My notes
+        </Link>
       </div>
       <div className="flex items-center justify-center gap-4">
         <ThemeToggle theme={theme} />
         <Login>
           <div className="flex flex-1 justify-end">
-            <a href="#" className="text-sm font-semibold leading-6 text-white">
+            <a href="#" className="text-sm font-semibold leading-6 text-gray-700 dark:text-smoke-100">
               Log in <span aria-hidden="true">&rarr;</span>
               {/* <UserCircleIcon className="h-7 w-7 text-smoke-400" aria-hidden="true" /> */}
             </a>

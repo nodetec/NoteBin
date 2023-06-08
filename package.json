@@ -21,6 +21,7 @@
     "autoprefixer": "10.4.14",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
+    "fuse.js": "^6.6.2",
     "next": "13.4.4",
     "next-remove-imports": "^1.0.11",
     "nostr-tools": "^1.11.1",
