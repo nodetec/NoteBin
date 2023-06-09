@@ -2,6 +2,7 @@ import { useReadRelayStore } from "@/app/stores/readRelayStore";
 import { useRelayStore } from "@/app/stores/relayStore";
 
 import { useRelayInfoStore } from "../../stores/relayInfoStore";
+import RelayIcon from "./RelayIcon";
 
 export default function ReadRelayCards() {
   const { getRelayInfo } = useRelayInfoStore();
@@ -28,9 +29,9 @@ export default function ReadRelayCards() {
                 <div className="absolute inset-0" aria-hidden="true" />
                 <div className="relative flex min-w-0 flex-1 items-center">
                   <span className="relative inline-block flex-shrink-0">
-                    <img
-                      className="h-10 w-10 rounded-full"
+                    <RelayIcon
                       src={readRelay.url.replace("wss://", "https://").replace("relay.", "") + "/favicon.ico"}
+                      fallback="https://user-images.githubusercontent.com/29136904/244441447-d6f64435-6155-4ffa-8574-fb221a3ad412.png"
                       alt=""
                     />
                   </span>

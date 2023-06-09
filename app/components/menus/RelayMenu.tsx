@@ -33,6 +33,7 @@ export default function RelayMenu() {
       const cachedRelayInfo = getRelayInfo(relayUrl);
       let relayHttpUrl = relayUrl.replace("wss://", "https://");
       if (cachedRelayInfo === undefined) {
+        console.log("Fetching relay info:", relayHttpUrl);
         const getRelayInfo = async (url: string) => {
           try {
             const response = await fetch(url, {
@@ -44,6 +45,7 @@ export default function RelayMenu() {
             // data.url = relayUrl;
             addRelayInfo(relayUrl, data);
           } catch (error) {
+            console.log("Error fetching relay info:", relayHttpUrl)
             console.error(`Error fetching relay information: ${error}`);
           }
         };
