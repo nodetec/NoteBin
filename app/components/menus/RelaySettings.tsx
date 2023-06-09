@@ -55,7 +55,7 @@ export default function RelaySettings() {
     console.log("Setting post relay");
 
     if (postRelays.length === 1) {
-      alert("You must have at least one read relay.");
+      alert("You must have at least one post relay.");
       return;
     }
 
@@ -86,7 +86,16 @@ export default function RelaySettings() {
     setActiveRelays(uniqueActiveRelays);
   }, []);
 
-  // const fuse = new Fuse(excludeItems(getAllRelayInfo(), [...postRelays, ...readRelays]), options);
+  const handleRemoveRelay = (settingsRelayUrl: string) => {
+    if (settingsRelayUrl === relayUrl) {
+      alert("Cannot remove active relay.");
+      return;
+    }
+
+    removePostRelay(settingsRelayUrl);
+    removeReadRelay(settingsRelayUrl);
+    setActiveRelays(activeRelays.filter((relay) => relay.url !== settingsRelayUrl));
+  };
 
   return (
     <>
@@ -163,13 +172,18 @@ export default function RelaySettings() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-9 top-0 z-10 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-9 top-0 z-10 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-smoke-600">
                     <div className="py-1">
                       <Menu.Item>
                         {({ active }) => (
                           <a
                             href="#"
-                            className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "block px-4 py-2 text-sm")}
+                            className={classNames(
+                              active
+                                ? "bg-gray-100 text-gray-900 dark:bg-smoke-700 dark:text-smoke-100"
+                                : "text-gray-700 dark:text-smoke-200",
+                              "block px-4 py-2 text-sm"
+                            )}
                           >
                             Relay Info
                           </a>
@@ -177,12 +191,17 @@ export default function RelaySettings() {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "block px-4 py-2 text-sm")}
+                          <button
+                            onClick={() => handleRemoveRelay(relay.url)}
+                            className={classNames(
+                              active
+                                ? "bg-gray-100 text-gray-900 dark:bg-smoke-700 dark:text-red-500"
+                                : "text-gray-700 dark:text-smoke-200",
+                              "block w-full px-4 py-2 text-start text-sm"
+                            )}
                           >
                             Remove Relay
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </div>
