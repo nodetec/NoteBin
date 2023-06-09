@@ -66,8 +66,8 @@ export default function RelayDiscover() {
   }, [query]);
 
   const handleAddRelay = (postRelay: any) => {
-    addPostRelay(postRelay, true);
-    addReadRelay(postRelay, true);
+    addPostRelay(postRelay, false);
+    addReadRelay(postRelay, false);
   };
 
   function SearchItem(relay: any) {
