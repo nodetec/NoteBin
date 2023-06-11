@@ -6,7 +6,7 @@ import { useRelayInfoStore } from "@/app/stores/relayInfoStore";
 import { useRelayMenuStore } from "@/app/stores/relayMenuStore";
 import { useRelayStore } from "@/app/stores/relayStore";
 import { Dialog, Transition } from "@headlessui/react";
-import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import PostRelayCards from "./PostRelayCards";
 import ReadRelayCards from "./ReadRelayCards";
@@ -17,7 +17,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function RelayMenu() {
+export default function RelayInfoMenu() {
   const { RelayMenuTabs, relayMenuActiveTab, relayMenuIsOpen, setRelayMenuActiveTab, setRelayMenuIsOpen } = useRelayMenuStore();
 
   const { allRelays } = useRelayStore();
@@ -45,7 +45,7 @@ export default function RelayMenu() {
             // data.url = relayUrl;
             addRelayInfo(relayUrl, data);
           } catch (error) {
-            console.log("Error fetching relay info:", relayHttpUrl);
+            console.log("Error fetching relay info:", relayHttpUrl)
             console.error(`Error fetching relay information: ${error}`);
           }
         };
@@ -77,13 +77,7 @@ export default function RelayMenu() {
                   <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl dark:bg-smoke-700">
                     <div className="p-6">
                       <div className="flex items-start justify-between">
-                        <div className="flex gap-2 items-center">
-                          <Dialog.Title className="text-base font-semibold leading-6 text-slate-900 dark:text-smoke-50">
-                            Relays
-                          </Dialog.Title>
-                          <InformationCircleIcon className="cursor-pointer text-smoke-400 h-5 w-5" aria-hidden="true" />
-                        </div>
-
+                        <Dialog.Title className="text-base font-semibold leading-6 text-slate-900 dark:text-smoke-50">Relays</Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"

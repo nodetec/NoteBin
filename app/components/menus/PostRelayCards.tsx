@@ -1,8 +1,9 @@
+import { useEffect } from "react";
+
 import { usePostRelayStore } from "@/app/stores/postRelayStore";
 import { useRelayInfoStore } from "@/app/stores/relayInfoStore";
 
 import RelayIcon from "./RelayIcon";
-import { useEffect } from "react";
 
 export default function ReadRelayCards() {
   const { getRelayInfo } = useRelayInfoStore();
@@ -53,23 +54,23 @@ export default function ReadRelayCards() {
                     />
                   </span>
                   <div className="ml-4 truncate">
-                    {postRelay.isActive && getRelayInfo(postRelay.url) ? (
-                      <>
+                    {getRelayInfo(postRelay.url) &&
+                      (postRelay.isActive ? (
                         <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
                           <span>{getRelayInfo(postRelay.url).name}</span>
                           <span className="z-20 inline-flex select-none items-center px-2 text-xs font-medium text-green-600 dark:text-green-400 dark:ring-green-500/20">
                             Active
                           </span>
+                          <p className="truncate text-sm text-slate-500">{getRelayInfo(postRelay.url).contact}</p>
                         </p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
-                          {getRelayInfo(postRelay.url).name}
-                        </p>
-                      </>
-                    )}
-                    <p className="truncate text-sm text-slate-500">{getRelayInfo(postRelay.url).contact}</p>
+                      ) : (
+                        <>
+                          <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
+                            {getRelayInfo(postRelay.url).name}
+                          </p>
+                          <p className="truncate text-sm text-slate-500">{getRelayInfo(postRelay.url).contact}</p>
+                        </>
+                      ))}
                   </div>
                 </div>
               </div>

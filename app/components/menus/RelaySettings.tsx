@@ -11,7 +11,7 @@ import RelayIcon from "./RelayIcon";
 
 export default function RelaySettings() {
   const { getRelayInfo } = useRelayInfoStore();
-  const { allRelays, relayUrl } = useRelayStore();
+  const { relayUrl } = useRelayStore();
   const { readRelays, addReadRelay, removeReadRelay } = useReadRelayStore();
   const { postRelays, countActivePostRelays, addPostRelay, removePostRelay, checkPostRelayStatus } = usePostRelayStore();
   const [activeRelays, setActiveRelays] = useState<any[]>([]);
@@ -172,7 +172,7 @@ export default function RelaySettings() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-9 top-0 z-10 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-smoke-600">
+                  <Menu.Items className="absolute right-9 top-0 z-10 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-smoke-600">
                     <div className="py-1">
                       <Menu.Item>
                         {({ active }) => (
