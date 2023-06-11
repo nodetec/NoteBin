@@ -36,26 +36,28 @@ export default function ReadRelayCards() {
                     />
                   </span>
                   <div className="ml-4 truncate">
-                    {readRelay.isActive && getRelayInfo(readRelay.url) ? (
-                      <>
-                        <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
-                          <span>{getRelayInfo(readRelay.url).name}</span>
-                          <span
-                            className="z-20 inline-flex select-none items-center px-2 text-xs font-medium text-green-600 dark:text-green-400 dark:ring-green-500/20"
-                            // className="z-20 inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20"
-                          >
-                            Active
-                          </span>
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
-                          {getRelayInfo(readRelay.url).name}
-                        </p>
-                      </>
-                    )}
-                    <p className="truncate text-sm text-slate-500">{getRelayInfo(readRelay.url).contact}</p>
+                    {getRelayInfo(readRelay.url) &&
+                      (readRelay.isActive ? (
+                        <>
+                          <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
+                            <span>{getRelayInfo(readRelay.url).name}</span>
+                            <span
+                              className="z-20 inline-flex select-none items-center px-2 text-xs font-medium text-green-600 dark:text-green-400 dark:ring-green-500/20"
+                              // className="z-20 inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20"
+                            >
+                              Active
+                            </span>
+                          </p>
+                          <p className="truncate text-sm text-slate-500">{getRelayInfo(readRelay.url).contact}</p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
+                            {getRelayInfo(readRelay.url).name}
+                          </p>
+                          <p className="truncate text-sm text-slate-500">{getRelayInfo(readRelay.url).contact}</p>
+                        </>
+                      ))}
                   </div>
                 </div>
               </div>

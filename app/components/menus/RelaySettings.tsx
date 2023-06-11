@@ -115,8 +115,12 @@ export default function RelaySettings() {
                     />
                   </span>
                   <div className="ml-4 truncate">
-                    <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">{getRelayInfo(relay.url).name}</p>
-                    <p className="truncate text-sm text-slate-500">{getRelayInfo(relay.url).contact}</p>
+                    {getRelayInfo(relay.url) && (
+                      <>
+                        <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">{getRelayInfo(relay.url).name}</p>
+                        <p className="truncate text-sm text-slate-500">{getRelayInfo(relay.url).contact}</p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

@@ -56,13 +56,15 @@ export default function ReadRelayCards() {
                   <div className="ml-4 truncate">
                     {getRelayInfo(postRelay.url) &&
                       (postRelay.isActive ? (
-                        <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
-                          <span>{getRelayInfo(postRelay.url).name}</span>
-                          <span className="z-20 inline-flex select-none items-center px-2 text-xs font-medium text-green-600 dark:text-green-400 dark:ring-green-500/20">
-                            Active
-                          </span>
+                        <>
+                          <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
+                            <span>{getRelayInfo(postRelay.url).name}</span>
+                            <span className="z-20 inline-flex select-none items-center px-2 text-xs font-medium text-green-600 dark:text-green-400 dark:ring-green-500/20">
+                              Active
+                            </span>
+                          </p>
                           <p className="truncate text-sm text-slate-500">{getRelayInfo(postRelay.url).contact}</p>
-                        </p>
+                        </>
                       ) : (
                         <>
                           <p className="truncate text-sm font-medium text-slate-900 dark:text-smoke-100">
